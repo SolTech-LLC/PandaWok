@@ -1,0 +1,181 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover, shrink-to-fit=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="FOH System">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="apple-touch-fullscreen" content="yes">
+  <title>FOH Order System</title>
+  <link rel="icon" type="image/png" href="assets/images/favicon.PNG">
+  <link rel="apple-touch-icon" href="assets/images/favicon.PNG">
+  <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+
+  <div id="screen-flash"></div>
+  
+  <!-- Timeout Warning Popup -->
+  <div id="timeout-popup" class="popup-overlay" style="display: none;">
+    <div class="popup-content timeout-popup">
+      <div class="popup-header timeout-header">
+        <h2>Page About to Time Out</h2>
+      </div>
+      <div class="popup-body timeout-body">
+        <p>This page will return to the main screen in <span id="timeout-countdown">30</span> seconds due to inactivity.</p>
+        <button id="stay-active-btn" class="stay-active-button">I'm Still Here</button>
+      </div>
+    </div>
+  </div>
+
+  
+
+  <!-- Redesigned How To Guide Popup -->
+  <div id="how-to-popup" class="popup-overlay" style="display: none;">
+    <div class="popup-content how-to-content">
+      <div class="popup-header how-to-header">
+        <h2 id="popup-title">System Guide</h2>
+        <div class="header-buttons">
+          <button id="translate-btn" class="translate-btn" onclick="toggleLanguage()">ES</button>
+          <button class="close-btn" onclick="closeHowToGuide()">&times;</button>
+        </div>
+      </div>
+      <div class="popup-body how-to-body">
+        
+        <div class="guide-grid">
+          
+          <div class="guide-card touch-card">
+            <div class="card-icon">👆</div>
+            <h3 data-en="Touch Controls" data-es="Controles Táctiles">Touch Controls</h3>
+            <div class="control-list">
+              <div class="control-item">
+                <span class="control-action" data-en="Single Tap" data-es="Toque Simple">Single Tap</span>
+                <span class="control-desc" data-en="Add or prioritize item" data-es="Agregar o priorizar">Add or prioritize item</span>
+              </div>
+              <div class="control-item">
+                <span class="control-action" data-en="Double Tap" data-es="Doble Toque">Double Tap</span>
+                <span class="control-desc" data-en="Remove active item" data-es="Quitar elemento activo">Remove active item</span>
+              </div>
+              <div class="control-item">
+                <span class="control-action" data-en="Swipe Right" data-es="Deslizar Derecha">Swipe Right</span>
+                <span class="control-desc" data-en="Remove item from display" data-es="Quitar elemento">Remove item from display</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="guide-card layout-card">
+            <div class="card-icon">📱</div>
+            <h3 data-en="Screen Layout" data-es="Diseño de Pantalla">Screen Layout</h3>
+            <div class="layout-grid">
+              <div class="layout-section">
+                <div class="section-label left" data-en="LEFT" data-es="IZQUIERDA">LEFT</div>
+                <div class="section-desc" data-en="Menu buttons" data-es="Botones de menú">Menu buttons</div>
+              </div>
+              <div class="layout-section">
+                <div class="section-label center" data-en="CENTER" data-es="CENTRO">CENTER</div>
+                <div class="section-desc" data-en="Main dishes" data-es="Platos principales">Main dishes</div>
+              </div>
+              <div class="layout-section">
+                <div class="section-label right" data-en="RIGHT" data-es="DERECHA">RIGHT</div>
+                <div class="section-desc" data-en="Rice & noodles" data-es="Arroz y fideos">Rice & noodles</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="guide-card colors-card">
+            <div class="card-icon">🎨</div>
+            <h3 data-en="Color System" data-es="Sistema de Colores">Color System</h3>
+            <div class="color-indicators">
+              <div class="color-item">
+                <div class="color-dot green"></div>
+                <span data-en="Item requested" data-es="Artículo solicitado">Item requested</span>
+              </div>
+              <div class="color-item">
+                <div class="color-dot orange"></div>
+                <span data-en="Item waiting" data-es="Artículo esperando">Item waiting</span>
+              </div>
+              <div class="color-item">
+                <div class="color-dot red"></div>
+                <span data-en="Urgent - needs attention!" data-es="¡Urgente - necesita atención!">Urgent - needs attention!</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="guide-card features-card">
+            <div class="card-icon">✨</div>
+            <h3 data-en="Special Features" data-es="Características Especiales">Special Features</h3>
+            <div class="feature-list">
+              <div class="feature-item">
+                <span class="feature-name" data-en="Column Flash" data-es="Destello de Columna">Column Flash</span>
+                <span class="feature-desc" data-en="Tap column headers" data-es="Toca encabezados">Tap column headers</span>
+              </div>
+              <div class="feature-item">
+                <span class="feature-name" data-en="Page Alert" data-es="Alerta de Página">Page Alert</span>
+                <span class="feature-desc" data-en="Tap Entrees/Sides titles" data-es="Toca títulos Entrees/Sides">Tap Entrees/Sides titles</span>
+              </div>
+              <div class="feature-item">
+                <span class="feature-name" data-en="Clear All" data-es="Limpiar Todo">Clear All</span>
+                <span class="feature-desc" data-en="Tap 'Menu Items'" data-es="Toca 'Elementos'">Tap "Menu Items"</span>
+              </div>
+              <div class="feature-item">
+                <span class="feature-name" data-en="Audio Cues" data-es="Señales de Audio">Audio Cues</span>
+                <span class="feature-desc" data-en="Different sounds for actions" data-es="Sonidos diferentes">Different sounds for actions</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="guide-card settings-card">
+            <div class="card-icon">⚙️</div>
+            <h3 data-en="Settings" data-es="Configuraciones">Settings</h3>
+            <div class="settings-list">
+              <div class="setting-item">
+                <span class="setting-name" data-en="Mute Sounds" data-es="Silenciar Sonidos">Mute Sounds</span>
+                <label class="ios-toggle">
+                  <input type="checkbox" id="mute-sounds" onchange="toggleMuteSounds(this.checked)">
+                  <span class="ios-slider"></span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="container">
+    <div id="foh-panel">
+      <h2>Menu Items</h2>
+    </div>
+
+    <div id="entree-panel">
+      <h2>Entrees</h2>
+      <div id="stir-fry-section" class="stir-fry-section" style="display: none;">
+        <h3 class="stir-fry-header">Stir Fry</h3>
+        <div id="stir-fry-items"></div>
+      </div>
+    </div>
+    <div id="side-panel">
+      <h2>Sides</h2>
+    </div>
+  </div>
+  
+  <button id="how-to-button" onclick="openHowToGuide()">HELP</button>
+  <button id="exit-button" onclick="window.location.href='index.html'">EXIT</button>
+
+  <audio id="sound-add" src="assets/sounds/add.wav" preload="auto"></audio>
+  <audio id="sound-priority" src="assets/sounds/priority.wav" preload="auto"></audio>
+  <audio id="sound-page" src="assets/sounds/page.wav" preload="auto"></audio>
+  <audio id="sound-warning" src="assets/sounds/warning.mp3" preload="auto"></audio>
+  <audio id="sound-remove" src="assets/sounds/remove.wav" preload="auto"></audio>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
